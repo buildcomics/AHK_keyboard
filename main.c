@@ -15,6 +15,8 @@
 #define BTN_3_GPIO 10
 #define BTN_4_GPIO 11
 
+#define START_KEY HID_KEY_F14
+
 #define LED_1_RED_GPIO 2
 #define LED_2_RED_GPIO 3
 #define LED_3_RED_GPIO 5
@@ -47,13 +49,13 @@ void hid_task(void);
 void test_lights();
 
 const uint buttons[BUTTON_NUMBER] = {BTN_1_GPIO, BTN_2_GPIO, BTN_3_GPIO, BTN_4_GPIO};
-bool button_state[BUTTON_NUMBER] = {false, false, false, false};
-bool mute_state = false;
-bool camera_state = false;
 const uint leds[BUTTON_NUMBER][3] = {{LED_1_RED_GPIO, LED_1_GREEN_GPIO, LED_1_BLUE_GPIO},
                                      {LED_2_RED_GPIO, LED_2_GREEN_GPIO, LED_2_BLUE_GPIO},
                                      {LED_3_RED_GPIO, LED_3_GREEN_GPIO, LED_3_BLUE_GPIO},
                                      {LED_4_RED_GPIO, LED_4_GREEN_GPIO, LED_4_BLUE_GPIO}};
+const bool led_state_buttons[BUTTON_NUMBER] = {true, true, false, false}; //Defines which buttons should have statefull LEDS
+bool button_state[BUTTON_NUMBER] = {false, false, false, false};
+bool led_state[BUTTON_NUMBER] = {false, false, false, false};
 
 int main() {
     stdio_init_all(); //Initialize debug interface
@@ -75,7 +77,12 @@ int main() {
     printf("DEBUG: GPIO setting finished.\n");
     test_lights();
     printf("DEBUG: Light Test Finished.\n");
-    gpio_put(leds[0][1], 1); //Set green LED on for mute button
+
+    for (int i = 0; i<BUTTON_NUMBER; i++) { //For all buttons
+        if (led_state_buttons[i]) {
+            gpio_put(leds[i][1], 1); //Set green LED on for statefull buttons
+        }
+    }
 
     while (true){ // MAIN LOOP
         hid_task(); //HID Task
@@ -128,43 +135,32 @@ void hid_task(void) {
 
     if (board_millis() - start_ms < interval_ms) return; // not enough time
     start_ms += interval_ms;
-    printf("DEBUG: Checking button\n");
 
     for (int i = 0; i<BUTTON_NUMBER; i++) {
-        printf("DEBUG: nr: %d\n", i);
         if (!gpio_get(buttons[i])) { //If the button is pressed
             if (tud_suspended()) { //Wakeup if we are sleeping
                 tud_remote_wakeup();
             }
             if (!button_state[i]) { //If the button state was previously different
+                printf("DEBUG: Button pressed!\n" );
                if (tud_hid_ready()) {
                    uint8_t keycode[6] = {0};
-                   switch (i) {
-                       case 0: //First button, MUTE
-                        keycode[0] = HID_KEY_M;//Send mute on/off = ctrl+shift+m
-                        break;
-                       case 1: //First button, Camera Off
-                        keycode[0] = HID_KEY_O;//Send Camera Off/on = ctrl+shift+o
-                        break;
-                       case 2: //First button, Accept
-                        keycode[0] = HID_KEY_A;//Send accept = ctrl+shift+a
-                        break;
-                       case 3: //First button, Decline
-                        keycode[0] = HID_KEY_D;//Send decline = ctrl+shift+d
-                        break;
-                   }
-                   tud_hid_keyboard_report(REPORT_ID_KEYBOARD, KEYBOARD_MODIFIER_LEFTSHIFT | KEYBOARD_MODIFIER_LEFTCTRL , keycode);
+                   keycode[0] = START_KEY + i;
+                   tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0 , keycode);
                    button_state[i] = true;
-                   if (i == 0 && !mute_state) { //previously unmounted (and now muted)
-                        gpio_put(leds[0][0], 1); //Set red LED on
-                        gpio_put(leds[0][1], 0); //Set green LED off
-                        mute_state = true;
-                    }
-                    else if(i ==0) { //Previously muted, now unmuted
-                        gpio_put(leds[0][0], 0); //Set red LED off
-                        gpio_put(leds[0][1], 1); //Set green LED on
-                        mute_state = false;
-                    }
+
+                   if (led_state_buttons[i]) { //This button has a statefull LED
+                      if (led_state[i]) { //Current value is true = green, change to false = red
+                        gpio_put(leds[i][0], 0); //Set red LED off
+                        gpio_put(leds[i][1], 1); //Set green LED on
+                        led_state[i] = false;
+                      }
+                      else {
+                        gpio_put(leds[i][0], 1); //Set red LED on
+                        gpio_put(leds[i][1], 0); //Set green LED off
+                        led_state[i] = true;
+                      }
+                   }
                }
            }
         }
@@ -177,7 +173,6 @@ void hid_task(void) {
            }
         }
     }
-    printf("DEBUG: Button Check finished\n" );
 }
 
 // Invoked when received GET_REPORT control request

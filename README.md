@@ -1,17 +1,18 @@
-# Basic Raspberry Pi Pico Microsoft Teams Keyboard
+# Raspberry Pi Pico AutoHotkey Streamdeck / Keyboard with LEDs
 This is the GitHub repository for the project: https://buildcomics.com/ (TO Be Determined) \
 You will also find the "instructions"  there!
 
-## Models for 3D Printing
+## Current state
+Not able to get a HID Control request to the Device using the
+
+## Alternatives if HID not working:
+Control usb busylight from AHK using: https://www.autohotkey.com/boards/viewtopic.php?t=42148 \
+Tryout this: https://autohotkey.com/board/topic/64696-some-code-arduinoahk-beta-01/ \
+
 Find all the models for the Keyboard here: (TODO)
 
 ## Wiring
-I used one common cathode RGB LED 5mm wired with resistors. The led pinout goes as follows, counted from pin 1 as being the pin closest to the flat in the bottom of the LED:\
-1. Pin 1:RED, 68 ohm ==> GPIO 5
-2. Pin 2:CC, ==> GND
-3. Pin 3:BLUE, 15 ohm ==> GPIO 6
-4. Pin 4:GREEN, 39 ohm ==> GPIO 7
-
+TODO
 Note, the GPIO pins are based on the following piece of code in main.c. You can freely change these (apart from GPIO 0 & 1) by changing this code:
 ```
 #define LED_1_RED_GPIO 5
@@ -19,10 +20,7 @@ Note, the GPIO pins are based on the following piece of code in main.c. You can 
 #define LED_1_BLUE_GPIO 6
 ```
 ## Basic installation
-1. Download main.uf2 from the releases page: https://github.com/buildcomics/Busylight/releases
-2. Press the button on your raspberry pi Pico, and then connect it to your computer
-3. copy the "main.uf2" from the release page to the "RPI2" that shows up as a mass storage usb devcie
-4. Make sure your PC side software is installed
+TODO
 
 ## Main Code
 The main code is based on Tinyusb: https://github.com/hathach/tinyusb \
