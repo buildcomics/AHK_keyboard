@@ -15,8 +15,6 @@
 #define BTN_3_GPIO 10
 #define BTN_4_GPIO 11
 
-#define START_KEY HID_KEY_F14
-
 #define LED_1_RED_GPIO 2
 #define LED_2_RED_GPIO 3
 #define LED_3_RED_GPIO 5
@@ -32,6 +30,8 @@
 #define LED_3_BLUE_GPIO 22
 #define LED_4_BLUE_GPIO 17
 
+#define START_KEY HID_KEY_F14
+
 #define EVENT_MASK_LOW 0x1
 #define EVENT_MASK_HIGH 0x2
 
@@ -40,8 +40,6 @@ LED flat side pin 1:RED, 68 ohm ==> GPIO
 LED flat side pin 2:CC, ==> GND
 LED flat side pin 3:BLUE, 15 ohm ==> GPIO
 LED flat side pin 4:GREEN, 39 ohm ==> GPIO
-TODO: Add debounce delay (5ms), use https://raspberrypi.github.io/pico-sdk-doxygen/group__hardware__timer.html ?
-TODO: Add
 */
 
 //Function Prototypes

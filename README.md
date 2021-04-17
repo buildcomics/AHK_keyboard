@@ -3,47 +3,63 @@ This is the GitHub repository for the project: https://buildcomics.com/ (TO Be D
 You will also find the "instructions"  there!
 
 ## Current state
-Not able to get a HID Control request to the Device using the
-
-## Alternatives if HID not working:
-Control usb busylight from AHK using: https://www.autohotkey.com/boards/viewtopic.php?t=42148 \
-Tryout this: https://autohotkey.com/board/topic/64696-some-code-arduinoahk-beta-01/ \
+Not able to get a HID Control request to the Device using the "control_leds.ahk" autohotkey script. Time to signal for help: https://www.autohotkey.com/boards/viewtopic.php?t=89209\
 
 Find all the models for the Keyboard here: (TODO)
 
 ## Wiring
-TODO
-Note, the GPIO pins are based on the following piece of code in main.c. You can freely change these (apart from GPIO 0 & 1) by changing this code:
+Refer to the Busylight repo for resistors and wiring of RGB LEDS: https://github.com/buildcomics/busylight \
+The switches are wired one side to ground and the other to a pin.
+The exact pins are as defined in the pin definitions main.c, these are the defaults, but change at will:
 ```
-#define LED_1_RED_GPIO 5
-#define LED_1_GREEN_GPIO 7
-#define LED_1_BLUE_GPIO 6
+#define BUTTON_NUMBER 4
+#define BTN_1_GPIO 4
+#define BTN_2_GPIO 8
+#define BTN_3_GPIO 10
+#define BTN_4_GPIO 11
+
+#define LED_1_RED_GPIO 2
+#define LED_2_RED_GPIO 3
+#define LED_3_RED_GPIO 5
+#define LED_4_RED_GPIO 9
+
+#define LED_1_GREEN_GPIO 6
+#define LED_2_GREEN_GPIO 12
+#define LED_3_GREEN_GPIO 14
+#define LED_4_GREEN_GPIO 15
+
+#define LED_1_BLUE_GPIO 21
+#define LED_2_BLUE_GPIO 16
+#define LED_3_BLUE_GPIO 22
+#define LED_4_BLUE_GPIO 17
+
 ```
 ## Basic installation
-TODO
+1. Download main.uf2 from the releases page: https://github.com/buildcomics/Busylight/releases.
+2. Press the button on your raspberry pi Pico, and then connect it to your computer.
+3. copy the "main.uf2" from the release page to the "RPI2" that shows up as a mass storage USB device.
+4. Install autohotkey: https://www.autohotkey.com/
+5. Use an AHK script to control your computer. See AHK Scripts for an example to control microsoft teams.
+
+## Still TODO
+1. Find away to "feedback"  the mute and camera status to the keyboard from AHK. As of now the buttons change colour when you press them, so it is (VERY) possible to "misalign"  the colours and the actual microphone and camera state.
 
 ## Main Code
 The main code is based on Tinyusb: https://github.com/hathach/tinyusb \
 The device mimics a standard keyboard \
-It sends the keyboard shortcut for Microsoft Teams as defined here: https://support.microsoft.com/en-us/office/keyboard-shortcuts-for-microsoft-teams-2e8e2a70-e8d8-4a19-949b-4c36dd5292d2
+It sends the keys F14-F18 which can be picked up by AHK. It switches the colour of the first two buttons when pressed.
 
 ### Compiling the code
 If you want to change the code and nteed to compile it, do the following:
 Assuming you have the raspberry pi pico c SDK installed(https://github.com/raspberrypi/pico-sdk) \
 The following (standard) commands will create "main.uf2" that can be copied onto the raspberry pi in bootsel mode:
-1. git clone git@github.com:buildcomics/Busylight.git
-2. cd Busylight
+1. git clone git@github.com:buildcomics/AHK_keyboard.git
+2. cd AHK_keyboard
 3. mkdir build
 4. cd build
 5. cmake ..
 6. make
 7. Now press the button on your raspbery pi pico, connect it and copy the main.uf2 to the pico that should show up ass a mass storage device
-
-## Testing
-Command to test HID descriptor of file: \
-`sudo usbhid-dump -a 1:58 | grep -v : | xxd -r  -p | hidrd-convert -o spec`
-\
-using the hidrd tool from: https://github.com/DIGImend/hidrd
 
 ## License
 MIT License
