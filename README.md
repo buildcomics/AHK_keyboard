@@ -35,7 +35,7 @@ The exact pins are as defined in the pin definitions main.c, these are the defau
 
 ```
 ## Basic installation
-1. Download main.uf2 from the releases page: https://github.com/buildcomics/Busylight/releases.
+1. Download main.uf2 from the releases page: https://github.com/buildcomics/AHK_keyboard/releases.
 2. Press the button on your raspberry pi Pico, and then connect it to your computer.
 3. copy the "main.uf2" from the release page to the "RPI2" that shows up as a mass storage USB device.
 4. Install autohotkey: https://www.autohotkey.com/
