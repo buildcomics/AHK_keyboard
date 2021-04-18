@@ -1,11 +1,11 @@
 # Raspberry Pi Pico AutoHotkey Streamdeck / Keyboard with LEDs
-This is the GitHub repository for the project: https://buildcomics.com/ (TO Be Determined) \
+This is the GitHub repository for the project: https://buildcomics.com/3d-printing/a-microsoft-teams-adventure/ \
 You will also find the "instructions"  there!
 
 ## Current state
 Not able to get a HID Control request to the Device using the "control_leds.ahk" autohotkey script. Time to signal for help: https://www.autohotkey.com/boards/viewtopic.php?t=89209\
 
-Find all the models for the Keyboard here: (TODO)
+Find all the models for the Keyboard here: https://www.prusaprinters.org/prints/64087-streamdeck-for-autohotkey
 
 ## Wiring
 Refer to the Busylight repo for resistors and wiring of RGB LEDS: https://github.com/buildcomics/busylight \
@@ -42,7 +42,8 @@ The exact pins are as defined in the pin definitions main.c, these are the defau
 5. Use an AHK script to control your computer. See AHK Scripts for an example to control microsoft teams.
 
 ## Still TODO
-1. Find away to "feedback"  the mute and camera status to the keyboard from AHK. As of now the buttons change colour when you press them, so it is (VERY) possible to "misalign"  the colours and the actual microphone and camera state.
+1. Find away to "feedback"  the mute and camera status to the keyboard from AHK. As of now the buttons change colour when you press them, so it is (VERY) possible to "misalign"  the colours and the actual microphone and camera state. You can help me out here:     https://github.com/hathach/tinyusb/discussions/667 \
+    https://www.autohotkey.com/boards/viewtopic.php?t=89209
 
 ## Main Code
 The main code is based on Tinyusb: https://github.com/hathach/tinyusb \
