@@ -5,7 +5,19 @@ You will also find the "instructions"  there!
 ## Current state
 Not able to get a HID Control request to the Device using the "control_leds.ahk" autohotkey script. Time to signal for help: https://www.autohotkey.com/boards/viewtopic.php?t=89209\
 
+## Models
 Find all the models for the Keyboard here: https://www.prusaprinters.org/prints/64087-streamdeck-for-autohotkey
+
+## Bill Of Materials (BOM)
++ 1 x Raspberry Pi pico
++ 4 x cherry mx (silent red RGB used, but most should work)
++ The models (see above) 3d Printed
+
+### Optional parts for LEDS:
++ 4 x 5mm RGB led common cathode
++ 4 x 86 Ohm 1/4w resistor
++ 4 x 15 Ohm 1/4w resistor
++ 4 x 39 Ohm 1/4w resistor
 
 ## Wiring
 Refer to the Busylight repo for resistors and wiring of RGB LEDS: https://github.com/buildcomics/busylight \
