@@ -15,12 +15,18 @@ Find all the models for the Keyboard here: https://www.prusaprinters.org/prints/
 
 ### Optional parts for LEDS:
 + 4 x 5mm RGB led common cathode
-+ 4 x 86 Ohm 1/4w resistor
++ 4 x 68 Ohm 1/4w resistor
 + 4 x 15 Ohm 1/4w resistor
 + 4 x 39 Ohm 1/4w resistor
 
 ## Wiring
-Refer to the Busylight repo for resistors and wiring of RGB LEDS: https://github.com/buildcomics/busylight \
+### (Optional) RGB Led Wiring
+I used one common cathode RGB LED 5mm wired with resistors. The led pinout goes as follows, counted from pin 1 as being the pin closest to the flat in the bottom of the LED (Note, some RGB LEDS are wired Red, GND, Green, Blue)!:\
+1. Pin 1:RED, 68 ohm ==> GPIO 5
+2. Pin 2:CC, ==> GND
+3. Pin 3:BLUE, 15 ohm ==> GPIO 6
+4. Pin 4:GREEN, 39 ohm ==> GPIO 7
+###Switch wiring
 The switches are wired one side to ground and the other to a pin.
 The exact pins are as defined in the pin definitions main.c, these are the defaults, but change at will:
 ```
@@ -29,17 +35,14 @@ The exact pins are as defined in the pin definitions main.c, these are the defau
 #define BTN_2_GPIO 8
 #define BTN_3_GPIO 10
 #define BTN_4_GPIO 11
-
 #define LED_1_RED_GPIO 2
 #define LED_2_RED_GPIO 3
 #define LED_3_RED_GPIO 5
 #define LED_4_RED_GPIO 9
-
 #define LED_1_GREEN_GPIO 6
 #define LED_2_GREEN_GPIO 12
 #define LED_3_GREEN_GPIO 14
 #define LED_4_GREEN_GPIO 15
-
 #define LED_1_BLUE_GPIO 21
 #define LED_2_BLUE_GPIO 16
 #define LED_3_BLUE_GPIO 22
